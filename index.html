@@ -18,6 +18,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden;
         }
         #app-container {
             width: 90%;
@@ -30,20 +31,26 @@
             position: relative;
             z-index: 2;
         }
+        h2 { color: #2d3436; margin-top: 0; margin-bottom: 25px; }
+        
+        /* Menu Buttons */
         .menu-btn {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 16px;
+            margin: 12px 0;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             background: var(--primary);
             color: white;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            transition: transform 0.2s, background 0.3s;
         }
+        .menu-btn:active { transform: scale(0.98); }
+        
+        /* Study Page */
         .card { display: none; }
         .display-box {
             min-height: 180px;
@@ -53,29 +60,49 @@
             align-items: center;
             cursor: pointer;
             border: 2px dashed #ddd;
-            border-radius: 15px;
+            border-radius: 20px;
             margin-bottom: 20px;
             padding: 20px;
+            background-color: #fafafa;
         }
-        #main-display { font-size: 55px; font-weight: bold; margin: 0; color: #2d3436; }
+        #main-display { font-size: 60px; font-weight: bold; margin: 0; color: #2d3436; }
         #answer-display { 
-            font-size: 24px; 
+            font-size: 22px; 
             color: var(--secondary); 
             font-weight: 500; 
             margin-top: 15px; 
-            line-height: 1.4;
+            line-height: 1.5;
         }
         
-        .back-btn { background: #b2bec3; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px; }
-        .next-btn { background: var(--secondary); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; width: 100%; }
-        
+        .next-btn { 
+            background: var(--secondary); 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: bold;
+            cursor: pointer; 
+            width: 100%; 
+        }
+        .back-btn { 
+            background: transparent; 
+            color: #636e72; 
+            border: none; 
+            padding: 10px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            text-decoration: underline;
+        }
+
+        /* Watermark - Korean with leen thilina */
         .watermark {
             position: fixed;
-            bottom: 15px;
+            bottom: 20px;
             width: 100%;
             text-align: center;
-            font-size: 13px;
-            color: #95a5a6;
+            font-size: 12px;
+            color: #b2bec3;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -87,14 +114,14 @@
 
 <div id="app-container">
     <div id="menu-page">
-        <h2 style="margin-top:0">Korean Master</h2>
-        <button class="menu-btn" onclick="startApp('time')">වෙලාව කියවීම</button>
-        <button class="menu-btn" onclick="startApp('native')">Native Korean</button>
-        <button class="menu-btn" onclick="startApp('sino')">Sino Korean</button>
+        <h2>Korean Master</h2>
+        <button class="menu-btn" onclick="startApp('time')">වෙලාව කියවමු (Time)</button>
+        <button class="menu-btn" onclick="startApp('native')">ගණන් කරමු (Native Korean)</button>
+        <button class="menu-btn" onclick="startApp('sino')">අංක සහ ඉලක්කම් (Sino Korean)</button>
     </div>
 
     <div id="study-page" class="card">
-        <h3 id="mode-title" style="color:var(--primary)">Mode</h3>
+        <h3 id="mode-title" style="color:var(--primary); margin-top:0;">Mode</h3>
         <div class="display-box" onclick="showAnswer()">
             <div id="main-display">?</div>
             <div id="answer-display">ටච් කරන්න</div>
@@ -121,10 +148,9 @@
             {n: "4", k: "사 (Sa)"}, {n: "5", k: "오 (O)"}, {n: "6", k: "육 (Yuk)"},
             {n: "7", k: "칠 (Chil)"}, {n: "8", k: "팔 (Pal)"}, {n: "9", k: "구 (Gu)"}, {n: "10", k: "십 (Sip)"}
         ],
-        // පැය සඳහා (Native)
+        // Time Data
         hNative: ["", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두"],
         hEng: ["", "Han", "Du", "Se", "Ne", "Daseot", "Yeoseot", "Ilgop", "Yeodeol", "Ahop", "Yeol", "Yeol-han", "Yeol-du"],
-        // මිනිත්තු සඳහා (Sino)
         mSino: {
             10: {k: "십", e: "sip"}, 20: {k: "이십", e: "i-sip"}, 30: {k: "삼십", e: "sam-sip"},
             40: {k: "사십", e: "sa-sip"}, 50: {k: "오십", e: "o-sip"}
@@ -135,7 +161,12 @@
         currentMode = mode;
         document.getElementById('menu-page').style.display = 'none';
         document.getElementById('study-page').style.display = 'block';
-        let titles = { 'time': 'වෙලාව කියවීම', 'native': 'Native Korean', 'sino': 'Sino Korean' };
+        
+        let titles = { 
+            'time': 'වෙලාව කියවමු', 
+            'native': 'Native Korean (1-10)', 
+            'sino': 'Sino Korean (1-10)' 
+        };
         document.getElementById('mode-title').innerText = titles[mode];
         generateQuestion();
     }
@@ -161,20 +192,19 @@
             let minute = Math.floor(Math.random() * 6) * 10;
             display.innerText = `${hour}:${minute === 0 ? '00' : minute}`;
             
-            let korTime = data.hNative[hour] + " 시";
-            let engTime = data.hEng[hour] + " si";
+            let korPart = data.hNative[hour] + " 시";
+            let engPart = data.hEng[hour] + " si";
 
             if (minute === 30) {
-                korTime += " 반";
-                engTime += " ban";
+                korPart += " 반";
+                engPart += " ban";
             } else if (minute !== 0) {
-                korTime += " " + data.mSino[minute].k + " 분";
-                engTime += " " + data.mSino[minute].e + " bun";
-            } else {
-                // 00 මිනිත්තු නම් පැය විතරයි
+                korPart += " " + data.mSino[minute].k + " 분";
+                engPart += " " + data.mSino[minute].e + " bun";
             }
 
-            currentAnswer = `${korTime}<br>(${engTime})`;
+            // එක දිගට කොරියන් අකුරු සහ වරහන් ඇතුළේ ඉංග්‍රීසි උච්චාරණය
+            currentAnswer = korPart + "<br>(" + engPart + ")";
         }
     }
 
@@ -183,5 +213,6 @@
         document.getElementById('answer-display').style.color = "var(--secondary)";
     }
 </script>
+
 </body>
 </html>
