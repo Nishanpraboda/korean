@@ -8,17 +8,14 @@
         :root {
             --primary: #6c5ce7;
             --secondary: #00b894;
-            --bg: #f0f2f5;
         }
         
-        /* අලුත් ෆොටෝ ලින්ක් එක මෙතන තියෙනවා */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            background: #2d3436 url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Gyeongbokgung_Palace_at_Night.jpg/1200px-Gyeongbokgung_Palace_at_Night.jpg');
+            /* Background එක පේන්නේ නැති වුණොත් තද නිල් පාටක් පෙනේවි */
+            background: #1a1a2e url('https://upload.wikimedia.org/wikipedia/commons/d/de/Gyeongbokgung_Palace_at_Night.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,13 +24,13 @@
             position: relative;
         }
 
-        /* Overlay එක */
+        /* Overlay - මේකෙන් තමයි ෆොටෝ එක උඩ අඳුරු ගතිය ඇති කරන්නේ */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5); 
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(3px);
             z-index: 1;
         }
 
@@ -41,9 +38,9 @@
             width: 85%;
             max-width: 380px;
             background: rgba(255, 255, 255, 0.95);
-            padding: 35px 25px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: center;
             position: relative;
             z-index: 2;
@@ -52,59 +49,59 @@
         .menu-btn {
             display: block;
             width: 100%;
-            padding: 18px;
-            margin: 15px 0;
+            padding: 16px;
+            margin: 12px 0;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             background: var(--primary);
             color: white;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.2s;
         }
-        .menu-btn:active { transform: scale(0.96); }
+        .menu-btn:active { transform: scale(0.97); }
         
         .card { display: none; }
         
         .display-box {
-            min-height: 180px;
+            min-height: 170px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             border: 2px dashed #ccc;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: #fff;
         }
         
-        #main-display { font-size: 60px; font-weight: bold; color: #2d3436; }
+        #main-display { font-size: 55px; font-weight: bold; color: #2d3436; }
         #answer-display { 
-            font-size: 24px; color: var(--secondary); font-weight: 600; 
-            margin-top: 15px; line-height: 1.4;
+            font-size: 22px; color: var(--secondary); font-weight: 600; 
+            margin-top: 10px; line-height: 1.4;
         }
         
         .next-btn { 
             background: var(--secondary); color: white; border: none; 
-            padding: 16px; border-radius: 12px; font-size: 17px; 
+            padding: 15px; border-radius: 10px; font-size: 16px; 
             font-weight: bold; cursor: pointer; width: 100%; 
         }
         .back-btn { 
             background: transparent; color: #636e72; border: none; 
-            padding: 10px; cursor: pointer; margin-top: 15px; 
-            text-decoration: underline;
+            padding: 10px; cursor: pointer; margin-top: 10px; 
+            text-decoration: underline; font-size: 14px;
         }
 
         .watermark {
             position: fixed;
-            bottom: 20px;
+            bottom: 15px;
             width: 100%;
             text-align: center;
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -122,7 +119,7 @@
     </div>
 
     <div id="study-page" class="card">
-        <h3 id="mode-title" style="color:var(--primary); margin: 0 0 20px 0;">Mode</h3>
+        <h3 id="mode-title" style="color:var(--primary); margin: 0 0 15px 0;">Mode</h3>
         <div class="display-box" onclick="showAnswer()">
             <div id="main-display">?</div>
             <div id="answer-display">ටච් කරන්න</div>
