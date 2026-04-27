@@ -55,7 +55,7 @@
             z-index: 1000;
         }
 
-        /* --- Custom Styled Dropdown --- */
+        /* Custom Dropdown */
         .custom-dropdown {
             position: relative;
             display: inline-block;
@@ -108,14 +108,9 @@
             gap: 8px;
         }
 
-        .dropdown-option:hover {
-            background: var(--dropdown-hover);
-            color: var(--primary);
-        }
-
+        .dropdown-option:hover { background: var(--dropdown-hover); color: var(--primary); }
         .dropdown-options.show { display: block; }
 
-        /* --- UI Elements --- */
         #app-container {
             width: 85%;
             max-width: 380px;
@@ -154,7 +149,7 @@
         .next-btn { background: var(--secondary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; width: 100%; }
         .back-btn { background: transparent; color: var(--text-main); border: none; padding: 10px; cursor: pointer; margin-top: 15px; text-decoration: underline; font-size: 14px; opacity: 0.7; }
 
-        .watermark { position: fixed; bottom: 20px; width: 100%; text-align: center; font-size: 11px; color: var(--text-main); opacity: 0.4; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        .watermark { position: fixed; bottom: 20px; width: 100%; text-align: center; font-size: 11px; color: var(--text-main); opacity: 0.4; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; pointer-events: none; }
 
         /* Toggle Switch */
         .switch { position: relative; display: inline-block; width: 55px; height: 30px; }
@@ -174,9 +169,9 @@
             <span>▼</span>
         </div>
         <div class="dropdown-options" id="dropdown-options">
-            <div class="dropdown-option" onclick="changeLang('si', 'Sinhala', 'සි')"><span>සි</span> Sinhala</div>
-            <div class="dropdown-option" onclick="changeLang('en', 'English', 'En')"><span>En</span> English</div>
-            <div class="dropdown-option" onclick="changeLang('ko', 'Korean', '코')"><span>코</span> Korean</div>
+            <div class="dropdown-option" onclick="changeLang('si', 'Sinhala')"><span>සි</span> Sinhala</div>
+            <div class="dropdown-option" onclick="changeLang('en', 'English')"><span>En</span> English</div>
+            <div class="dropdown-option" onclick="changeLang('ko', 'Korean')"><span>코</span> Korean</div>
         </div>
     </div>
 
@@ -200,7 +195,7 @@
         <h3 id="mode-title" style="color:var(--primary); margin: 0 0 20px 0;">Mode</h3>
         <div class="display-box" onclick="showAnswer()">
             <div id="main-display">?</div>
-            <div id="answer-display" id="label-touch">ටච් කරන්න</div>
+            <div id="answer-display">ටච් කරන්න</div>
         </div>
         <button class="next-btn" id="btn-next" onclick="generateQuestion()">ඊළඟ එක</button>
         <button class="back-btn" id="btn-back" onclick="showMenu()">ප්‍රධාන මෙනුවට</button>
@@ -217,7 +212,7 @@
     const translations = {
         si: { time: "වෙලාව කියවමු", native: "ගණන් කරමු (Native)", sino: "අංක සහ ඉලක්කම් (Sino)", touch: "ටච් කරන්න", next: "ඊළඟ එක", back: "ප්‍රධාන මෙනුවට", modeTime: "වෙලාව කියවමු", modeNative: "Native Korean (1-10)", modeSino: "Sino Korean (1-10)" },
         en: { time: "Tell Time", native: "Counting (Native)", sino: "Numbers (Sino)", touch: "Touch to reveal", next: "Next One", back: "Back to Menu", modeTime: "Tell the Time", modeNative: "Native Korean (1-10)", modeSino: "Sino-Korean (1-10)" },
-        ko: { time: "시간 말하기", native: "수 세기 (순수)", sino: "숫자 (한자어)", touch: "터치하여 확인", next: "다음", back: "메인 메뉴로", modeTime: "시간 읽기", modeNative: "순수 한국어 숫자", modeSino: "한자어 숫자" }
+        ko: { time: "시간 읽기", native: "수 세기 (순수)", sino: "숫자 (한자어)", touch: "터치하여 확인", next: "다음", back: "메인 메뉴로", modeTime: "시간 읽기", modeNative: "순수 한국어 숫자", modeSino: "한자어 숫자" }
     };
 
     const data = {
@@ -225,29 +220,18 @@
         sino: [ {n: "1", k: "일 (Il)"}, {n: "2", k: "이 (I)"}, {n: "3", k: "삼 (Sam)"}, {n: "4", k: "사 (Sa)"}, {n: "5", k: "오 (O)"}, {n: "6", k: "육 (Yuk)"}, {n: "7", k: "칠 (Chil)"}, {n: "8", k: "팔 (Pal)"}, {n: "9", k: "구 (Gu)"}, {n: "10", k: "십 (Sip)"} ],
         hNative: ["", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두"],
         hEng: ["", "Han", "Du", "Se", "Ne", "Daseot", "Yeoseot", "Ilgop", "Yeodeol", "Ahop", "Yeol", "Yeol-han", "Yeol-du"],
-        mSino: { 10: {k: "십", e: "sip"}, 20: {k: "이십", e: "i-sip"}, 30: {k: "삼십", e: "sam-sip"}, 40: {k: "사십", e: "sa-sip"}, 50: {k: "오십", e: "o-sip"} }
+        mSino: { 10: {k: "십", e: "sip"}, 20: {k: "이십", e: "i-sip"}, 30: {k: "삼십", e: "samsip"}, 40: {k: "사십", e: "sasip"}, 50: {k: "오십", e: "osip"} }
     };
 
-    // --- Dropdown Functions ---
-    function toggleDropdown() {
-        document.getElementById('dropdown-options').classList.toggle('show');
-    }
-
+    function toggleDropdown() { document.getElementById('dropdown-options').classList.toggle('show'); }
     function changeLang(langCode, langName) {
         activeLang = langCode;
         document.getElementById('current-lang-text').innerText = langName;
         document.getElementById('dropdown-options').classList.remove('show');
         applyTranslations();
     }
+    window.onclick = function(e) { if (!e.target.closest('.custom-dropdown')) document.getElementById('dropdown-options').classList.remove('show'); }
 
-    // Close dropdown when clicking outside
-    window.onclick = function(event) {
-        if (!event.target.closest('.custom-dropdown')) {
-            document.getElementById('dropdown-options').classList.remove('show');
-        }
-    }
-
-    // Theme Switch
     document.getElementById('theme-checkbox').addEventListener('change', (e) => {
         document.body.setAttribute('data-theme', e.target.checked ? 'dark' : 'light');
     });
@@ -261,9 +245,7 @@
         document.getElementById('btn-back').innerText = t.back;
         if (currentMode) {
             document.getElementById('mode-title').innerText = { 'time': t.modeTime, 'native': t.modeNative, 'sino': t.modeSino }[currentMode];
-            if (document.getElementById('answer-display').style.opacity == "0.5") {
-                document.getElementById('answer-display').innerText = t.touch;
-            }
+            if (document.getElementById('answer-display').style.opacity == "0.5") document.getElementById('answer-display').innerText = t.touch;
         }
     }
 
@@ -275,11 +257,7 @@
         generateQuestion();
     }
 
-    function showMenu() {
-        document.getElementById('menu-page').style.display = 'block';
-        document.getElementById('study-page').style.display = 'none';
-        currentMode = '';
-    }
+    function showMenu() { document.getElementById('menu-page').style.display = 'block'; document.getElementById('study-page').style.display = 'none'; currentMode = ''; }
 
     function generateQuestion() {
         let display = document.getElementById('main-display');
@@ -288,8 +266,7 @@
         answerBox.style.opacity = "0.5";
 
         if (currentMode === 'native' || currentMode === 'sino') {
-            let list = data[currentMode];
-            let item = list[Math.floor(Math.random() * list.length)];
+            let item = data[currentMode][Math.floor(Math.random() * data[currentMode].length)];
             display.innerText = item.n;
             currentAnswer = item.k;
         } 
@@ -297,10 +274,17 @@
             let hour = Math.floor(Math.random() * 12) + 1;
             let minute = Math.floor(Math.random() * 6) * 10;
             display.innerText = `${hour}:${minute === 0 ? '00' : minute}`;
+            
             let korPart = data.hNative[hour] + " 시";
             let engPart = data.hEng[hour] + " si";
-            if (minute === 30) { korPart += " 반"; engPart += " ban"; }
-            else if (minute !== 0) { korPart += " " + data.mSino[minute].k + " 분"; engPart += " " + data.mSino[minute].e + " bun"; }
+
+            if (minute === 30) {
+                korPart += " 삼십 분 (반)";
+                engPart += " samsip-bun (ban)";
+            } else if (minute !== 0) {
+                korPart += " " + data.mSino[minute].k + " 분";
+                engPart += " " + data.mSino[minute].e + " bun";
+            }
             currentAnswer = korPart + "<br>(" + engPart + ")";
         }
     }
