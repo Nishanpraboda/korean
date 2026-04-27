@@ -46,7 +46,7 @@
         }
         .card { display: none; }
         .display-box {
-            min-height: 150px;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -58,12 +58,17 @@
             padding: 20px;
         }
         #main-display { font-size: 55px; font-weight: bold; margin: 0; color: #2d3436; }
-        #answer-display { font-size: 26px; color: var(--secondary); font-weight: 500; margin-top: 15px; }
+        #answer-display { 
+            font-size: 24px; 
+            color: var(--secondary); 
+            font-weight: 500; 
+            margin-top: 15px; 
+            line-height: 1.4;
+        }
         
         .back-btn { background: #b2bec3; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px; }
         .next-btn { background: var(--secondary); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; width: 100%; }
         
-        /* Watermark Style */
         .watermark {
             position: fixed;
             bottom: 15px;
@@ -116,8 +121,14 @@
             {n: "4", k: "사 (Sa)"}, {n: "5", k: "오 (O)"}, {n: "6", k: "육 (Yuk)"},
             {n: "7", k: "칠 (Chil)"}, {n: "8", k: "팔 (Pal)"}, {n: "9", k: "구 (Gu)"}, {n: "10", k: "십 (Sip)"}
         ],
-        nativeHours: ["", "한 (Han)", "두 (Du)", "세 (Se)", "네 (Ne)", "다섯 (Daseot)", "여섯 (Yeoseot)", "일곱 (Ilgop)", "여덟 (Yeodeol)", "아홉 (Ahop)", "열 (Yeol)", "열한 (Yeol-han)", "열두 (Yeol-du)"],
-        sinoMinutes: ["영", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십"]
+        // පැය සඳහා (Native)
+        hNative: ["", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두"],
+        hEng: ["", "Han", "Du", "Se", "Ne", "Daseot", "Yeoseot", "Ilgop", "Yeodeol", "Ahop", "Yeol", "Yeol-han", "Yeol-du"],
+        // මිනිත්තු සඳහා (Sino)
+        mSino: {
+            10: {k: "십", e: "sip"}, 20: {k: "이십", e: "i-sip"}, 30: {k: "삼십", e: "sam-sip"},
+            40: {k: "사십", e: "sa-sip"}, 50: {k: "오십", e: "o-sip"}
+        }
     };
 
     function startApp(mode) {
@@ -150,20 +161,25 @@
             let minute = Math.floor(Math.random() * 6) * 10;
             display.innerText = `${hour}:${minute === 0 ? '00' : minute}`;
             
-            let hKor = data.nativeHours[hour] + " 시 (si)";
-            let mKor = "";
-            if (minute === 0) mKor = "";
-            else if (minute === 30) mKor = " 반 (ban)";
-            else {
-                let mTens = minute / 10;
-                mKor = " " + (mTens === 1 ? "" : data.sino[mTens-1].k.split(' ')[0]) + "십 분 (sip-bun)";
+            let korTime = data.hNative[hour] + " 시";
+            let engTime = data.hEng[hour] + " si";
+
+            if (minute === 30) {
+                korTime += " 반";
+                engTime += " ban";
+            } else if (minute !== 0) {
+                korTime += " " + data.mSino[minute].k + " 분";
+                engTime += " " + data.mSino[minute].e + " bun";
+            } else {
+                // 00 මිනිත්තු නම් පැය විතරයි
             }
-            currentAnswer = hKor + mKor;
+
+            currentAnswer = `${korTime}<br>(${engTime})`;
         }
     }
 
     function showAnswer() {
-        document.getElementById('answer-display').innerText = currentAnswer;
+        document.getElementById('answer-display').innerHTML = currentAnswer;
         document.getElementById('answer-display').style.color = "var(--secondary)";
     }
 </script>
